@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 body {
-  @apply m-0;
-  font-family:"Figtree", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	@apply m-0;
+	font-family: "Figtree", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
