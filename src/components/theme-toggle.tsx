@@ -3,7 +3,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { useTheme } from "@/providers/theme-provider";
 import { Button } from "./ui/button";
 
-export function ModeToggle() {
+export function ThemeToggle() {
 	const { theme, setTheme } = useTheme();
 
 	function toggleTheme() {
@@ -11,7 +11,7 @@ export function ModeToggle() {
 	}
 
 	return (
-		<Button onClick={toggleTheme} size="icon" variant="outline">
+		<Button onClick={toggleTheme} size="icon" variant="ghost">
 			{theme === "dark" ? (
 				<HugeiconsIcon className="text-primary" icon={Moon02Icon} />
 			) : (
