@@ -1,6 +1,8 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { getThemeServerFn } from "@/lib/theme";
+import { ThemeProvider } from "@/providers/theme-provider";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -19,23 +21,37 @@ export const Route = createRootRoute({
 		],
 		links: [
 			{
+				rel: "preconnect",
+				href: "https://fonts.googleapis.com",
+			},
+			{
+				rel: "preconnect",
+				href: "https://fonts.gstatic.com",
+				crossOrigin: "anonymous",
+			},
+			{
+				rel: "stylesheet",
+				href: "https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap",
+			},
+			{
 				rel: "stylesheet",
 				href: appCss,
 			},
 		],
 	}),
-
+	loader: () => getThemeServerFn(),
 	shellComponent: RootDocument,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+	const theme = Route.useLoaderData();
 	return (
-		<html lang="en">
+		<html className={theme} lang="en" suppressHydrationWarning>
 			<head>
 				<HeadContent />
 			</head>
-			<body>
-				{children}
+			<body className="font-sans">
+				<ThemeProvider theme={theme}>{children}</ThemeProvider>
 				<TanStackDevtools
 					config={{
 						position: "bottom-right",
