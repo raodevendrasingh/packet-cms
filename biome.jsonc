@@ -50,7 +50,8 @@
 			"performance": {
 				"noDelete": "error",
 				"noImgElement": "off",
-				"noNamespaceImport": "off"
+				"noNamespaceImport": "off",
+				"noBarrelFile": "off"
 			},
 			"style": {
 				"noMagicNumbers": "off",
