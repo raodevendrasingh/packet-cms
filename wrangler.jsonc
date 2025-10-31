@@ -6,5 +6,12 @@
 	"main": "@tanstack/react-start/server-entry",
 	"observability": {
 		"enabled": true
-	}
+	},
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "37236b686af945248a2db2889b86c804",
+			"localConnectionString": "postgresql://packet:packet@localhost:5432/packet"
+		}
+	]
 }
