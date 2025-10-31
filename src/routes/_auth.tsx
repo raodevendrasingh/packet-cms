@@ -1,14 +1,13 @@
 import { CubeIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import placeholder from "@/assets/placeholder.svg";
-import { AuthForm } from "@/components/auth-form";
 
-export const Route = createFileRoute("/sign-up")({
-	component: SignUp,
+export const Route = createFileRoute("/_auth")({
+	component: AuthLayout,
 });
 
-function SignUp() {
+function AuthLayout() {
 	return (
 		<div className="grid min-h-svh lg:grid-cols-2">
 			<div className="flex flex-col gap-4 p-6 md:p-10">
@@ -22,7 +21,7 @@ function SignUp() {
 				</div>
 				<div className="flex flex-1 items-center justify-center">
 					<div className="w-full max-w-xs">
-						<AuthForm mode="register" />
+						<Outlet />
 					</div>
 				</div>
 			</div>

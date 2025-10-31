@@ -1,5 +1,5 @@
 import { useForm } from "@tanstack/react-form";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -16,86 +16,58 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
-type AuthFormProps = {
-	mode?: "login" | "register";
-	className?: string;
-};
+export const Route = createFileRoute("/_auth/sign-up")({
+	component: SignUp,
+});
 
-export function AuthForm({ mode = "login", className }: AuthFormProps) {
+function SignUp() {
 	const navigate = useNavigate();
-	const isRegister = mode === "register";
+	const searchParams = new URLSearchParams(window.location.search);
+	const redirectTo = searchParams.get("redirect") || "/dashboard";
 	const [isPending, setIsPending] = useState(false);
 
 	const form = useForm({
 		defaultValues: {
+			name: "",
 			email: "",
 			password: "",
-			...(isRegister && { name: "" }),
 		},
 		onSubmit: async ({ value }) => {
-			if (isRegister) {
-				await authClient.signUp.email({
-					email: value.email,
-					password: value.password,
-					name: value.name as string,
-					fetchOptions: {
-						onRequest: () => {
-							setIsPending(true);
-						},
-						onSuccess: () => {
-							setIsPending(false);
-							toast.success("Account created successfully!");
-							navigate({ to: "/dashboard" });
-						},
-						onError: (ctx) => {
-							setIsPending(false);
-							toast.error("Failed to create account", {
-								description:
-									typeof ctx.error === "string"
-										? ctx.error
-										: ctx.error?.message || "Unknown error",
-							});
-						},
+			await authClient.signUp.email({
+				email: value.email,
+				password: value.password,
+				name: value.name as string,
+				fetchOptions: {
+					onRequest: () => {
+						setIsPending(true);
 					},
-				});
-			} else {
-				await authClient.signIn.email({
-					email: value.email,
-					password: value.password,
-					fetchOptions: {
-						onRequest: () => {
-							setIsPending(true);
-						},
-						onSuccess: () => {
-							setIsPending(false);
-							toast.success("Signed in successfully!");
-							navigate({ to: "/dashboard" });
-						},
-						onError: (ctx) => {
-							setIsPending(false);
-							toast.error("Failed to authenticate", {
-								description:
-									typeof ctx.error === "string"
-										? ctx.error
-										: ctx.error?.message || "Unknown error",
-							});
-						},
+					onSuccess: () => {
+						setIsPending(false);
+						toast.success("Account created successfully!");
+						navigate({ to: redirectTo });
 					},
-				});
-			}
+					onError: (ctx) => {
+						setIsPending(false);
+						toast.error("Failed to create account", {
+							description:
+								typeof ctx.error === "string"
+									? ctx.error
+									: ctx.error?.message || "Unknown error",
+						});
+					},
+				},
+			});
 		},
 	});
 
-	let buttonText = "Login";
+	let buttonText = "Sign up";
 	if (form.state.isSubmitting) {
 		buttonText = "Loading...";
-	} else if (isRegister) {
-		buttonText = "Sign up";
 	}
 
 	return (
 		<form
-			className={cn("flex flex-col", className)}
+			className={cn("flex flex-col")}
 			onSubmit={(e) => {
 				e.preventDefault();
 				e.stopPropagation();
@@ -104,42 +76,36 @@ export function AuthForm({ mode = "login", className }: AuthFormProps) {
 		>
 			<FieldGroup>
 				<div className="flex flex-col items-center gap-1 text-center">
-					<h1 className="font-bold text-2xl">
-						{isRegister ? "Create an account" : "Login to your account"}
-					</h1>
+					<h1 className="font-bold text-2xl">Create an account</h1>
 					<p className="text-balance text-muted-foreground text-sm">
-						{isRegister
-							? "Enter your information to create an account"
-							: "Enter your email below to login to your account"}
+						Enter your information to create an account
 					</p>
 				</div>
 				<div className="space-y-4">
-					{isRegister && (
-						<form.Field
-							name="name"
-							validators={{
-								onChange: z.string().min(2, "Name must be at least 2 characters"),
-							}}
-						>
-							{(field) => (
-								<Field>
-									<FieldLabel htmlFor={field.name}>Name</FieldLabel>
-									<Input
-										aria-invalid={field.state.meta.errors.length > 0}
-										id={field.name}
-										name={field.name}
-										onBlur={field.handleBlur}
-										onChange={(e) => field.handleChange(e.target.value)}
-										placeholder="John Doe"
-										value={field.state.value}
-									/>
-									{field.state.meta.errors.length > 0 && (
-										<FieldError errors={field.state.meta.errors} />
-									)}
-								</Field>
-							)}
-						</form.Field>
-					)}
+					<form.Field
+						name="name"
+						validators={{
+							onChange: z.string().min(2, "Name must be at least 2 characters"),
+						}}
+					>
+						{(field) => (
+							<Field>
+								<FieldLabel htmlFor={field.name}>Name</FieldLabel>
+								<Input
+									aria-invalid={field.state.meta.errors.length > 0}
+									id={field.name}
+									name={field.name}
+									onBlur={field.handleBlur}
+									onChange={(e) => field.handleChange(e.target.value)}
+									placeholder="John Doe"
+									value={field.state.value}
+								/>
+								{field.state.meta.errors.length > 0 && (
+									<FieldError errors={field.state.meta.errors} />
+								)}
+							</Field>
+						)}
+					</form.Field>
 					<form.Field
 						name="email"
 						validators={{
@@ -173,17 +139,7 @@ export function AuthForm({ mode = "login", className }: AuthFormProps) {
 					>
 						{(field) => (
 							<Field>
-								<div className="flex items-center">
-									<FieldLabel htmlFor={field.name}>Password</FieldLabel>
-									{!isRegister && (
-										<Link
-											className="ml-auto text-sm underline-offset-4 hover:underline"
-											to="/sign-in"
-										>
-											Forgot your password?
-										</Link>
-									)}
-								</div>
+								<FieldLabel htmlFor={field.name}>Password</FieldLabel>
 								<Input
 									aria-invalid={field.state.meta.errors.length > 0}
 									id={field.name}
@@ -238,15 +194,12 @@ export function AuthForm({ mode = "login", className }: AuthFormProps) {
 								/>
 							</g>
 						</svg>
-						{isRegister ? "Sign up with Google" : "Login with Google"}
+						Sign up with Google
 					</Button>
 					<FieldDescription className="text-center">
-						{isRegister ? "Already have an account? " : "Don't have an account? "}
-						<Link
-							className="underline underline-offset-4"
-							to={isRegister ? "/sign-in" : "/sign-up"}
-						>
-							{isRegister ? "Sign in" : "Sign up"}
+						Already have an account?
+						<Link className="underline underline-offset-4" to="/sign-in">
+							Sign in
 						</Link>
 					</FieldDescription>
 				</Field>
