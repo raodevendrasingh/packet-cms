@@ -3,6 +3,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
+import { GoogleAuthButton } from "@/components/google-auth-button";
 import { Button } from "@/components/ui/button";
 import {
 	Field,
@@ -22,8 +23,6 @@ export const Route = createFileRoute("/_auth/sign-in")({
 
 function SignIn() {
 	const navigate = useNavigate();
-	const searchParams = new URLSearchParams(window.location.search);
-	const redirectTo = searchParams.get("redirect") || "/dashboard";
 	const [isPending, setIsPending] = useState(false);
 
 	const form = useForm({
@@ -42,7 +41,7 @@ function SignIn() {
 					onSuccess: () => {
 						setIsPending(false);
 						toast.success("Signed in successfully!");
-						navigate({ to: redirectTo });
+						navigate({ to: "/dashboard" });
 					},
 					onError: (ctx) => {
 						setIsPending(false);
@@ -145,39 +144,7 @@ function SignIn() {
 				</Field>
 				<FieldSeparator>Or continue with</FieldSeparator>
 				<Field>
-					<Button type="button" variant="outline">
-						<svg
-							height="32"
-							viewBox="0 0 16 16"
-							width="32"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<title>Google</title>
-							<g clip-rule="evenodd" fill="none" fill-rule="evenodd">
-								<path
-									d="M7.209 1.061c.725-.081 1.154-.081 1.933 0a6.57 6.57 0 0 1 3.65 1.82a100 100 0 0 0-1.986 1.93q-1.876-1.59-4.188-.734q-1.696.78-2.362 2.528a78 78 0 0 1-2.148-1.658a.26.26 0 0 0-.16-.027q1.683-3.245 5.26-3.86"
-									fill="#F44336"
-									opacity=".987"
-								/>
-								<path
-									d="M1.946 4.92q.085-.013.161.027a78 78 0 0 0 2.148 1.658A7.6 7.6 0 0 0 4.04 7.99q.037.678.215 1.331L2 11.116Q.527 8.038 1.946 4.92"
-									fill="#FFC107"
-									opacity=".997"
-								/>
-								<path
-									d="M12.685 13.29a26 26 0 0 0-2.202-1.74q1.15-.812 1.396-2.228H8.122V6.713q3.25-.027 6.497.055q.616 3.345-1.423 6.032a7 7 0 0 1-.51.49"
-									fill="#448AFF"
-									opacity=".999"
-								/>
-								<path
-									d="M4.255 9.322q1.23 3.057 4.51 2.854a3.94 3.94 0 0 0 1.718-.626q1.148.812 2.202 1.74a6.62 6.62 0 0 1-4.027 1.684a6.4 6.4 0 0 1-1.02 0Q3.82 14.524 2 11.116z"
-									fill="#43A047"
-									opacity=".993"
-								/>
-							</g>
-						</svg>
-						Login with Google
-					</Button>
+					<GoogleAuthButton />
 					<FieldDescription className="text-center">
 						{"Don't have an account? "}
 						<Link className="underline underline-offset-4" to="/sign-up">
