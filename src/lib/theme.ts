@@ -4,7 +4,7 @@ import * as z from "zod";
 
 const themeValidator = z.union([z.literal("light"), z.literal("dark")]);
 export type T = z.infer<typeof themeValidator>;
-const storageKey = "_preferred-packet-theme";
+const storageKey = "_preferred-parcel-theme";
 
 export const getThemeServerFn = createServerFn().handler(
 	async () => (getCookie(storageKey) || "light") as T

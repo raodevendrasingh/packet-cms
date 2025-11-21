@@ -1,12 +1,12 @@
 import { Menu01Icon, MultiplicationSignIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "@tanstack/react-router";
-import React from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./theme-toggle";
 
 export const Header = () => {
-	const [menuState, setMenuState] = React.useState(false);
+	const [menuState, setMenuState] = useState(false);
 	return (
 		<header>
 			<nav
@@ -18,10 +18,10 @@ export const Header = () => {
 						<div className="flex w-full justify-between lg:w-auto">
 							<Link
 								aria-label="home"
-								className="flex items-center space-x-2 font-semibold text-xl"
+								className="flex items-center space-x-2 font-bold text-2xl"
 								to="/"
 							>
-								Packet CMS
+								Parcel CMS
 							</Link>
 
 							<button

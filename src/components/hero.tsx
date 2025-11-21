@@ -11,7 +11,7 @@ export default function Hero() {
 					<div className="mx-auto max-w-7xl px-6 md:px-12">
 						<div className="text-center sm:mx-auto sm:w-10/12 lg:mt-0 lg:mr-auto lg:w-4/5">
 							<h1 className="font-semibold text-4xl md:text-5xl xl:text-6xl xl:leading-[1.125]">
-								Headless content <br /> delivered in packets
+								The simplest way to <br /> ship your content
 							</h1>
 
 							<p className="mx-auto mt-6 max-w-2xl text-wrap text-lg text-muted-foreground">

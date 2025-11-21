@@ -1,7 +1,7 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "packet-cms",
-	"compatibility_date": "2025-09-02",
+	"name": "parcel-cms",
+	"compatibility_date": "2025-09-15",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "@tanstack/react-start/server-entry",
 	"observability": {
@@ -10,8 +10,8 @@
 	"hyperdrive": [
 		{
 			"binding": "HYPERDRIVE",
-			"id": "37236b686af945248a2db2889b86c804",
-			"localConnectionString": "postgresql://packet:packet@localhost:5432/packet"
+			"id": "c5dcaca90c7c40b49a4186fc5388b893",
+			"localConnectionString": "postgresql://parcel:parcel@localhost:5432/parcel"
 		}
 	]
 }
