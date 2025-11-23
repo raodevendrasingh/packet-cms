@@ -13,7 +13,17 @@ import { Route as MarketingRouteImport } from './routes/_marketing'
 import { Route as CoreRouteImport } from './routes/_core'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as MarketingIndexRouteImport } from './routes/_marketing/index'
-import { Route as CoreDashboardRouteImport } from './routes/_core/dashboard'
+import { Route as CoreWebhooksRouteImport } from './routes/_core/webhooks'
+import { Route as CoreTagsRouteImport } from './routes/_core/tags'
+import { Route as CoreSettingsRouteImport } from './routes/_core/settings'
+import { Route as CorePostsRouteImport } from './routes/_core/posts'
+import { Route as CoreKeysRouteImport } from './routes/_core/keys'
+import { Route as CoreHelpRouteImport } from './routes/_core/help'
+import { Route as CoreDashRouteImport } from './routes/_core/dash'
+import { Route as CoreCategoriesRouteImport } from './routes/_core/categories'
+import { Route as CoreAuthorsRouteImport } from './routes/_core/authors'
+import { Route as CoreAssetsRouteImport } from './routes/_core/assets'
+import { Route as CoreAccountRouteImport } from './routes/_core/account'
 import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
@@ -35,9 +45,59 @@ const MarketingIndexRoute = MarketingIndexRouteImport.update({
   path: '/',
   getParentRoute: () => MarketingRoute,
 } as any)
-const CoreDashboardRoute = CoreDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const CoreWebhooksRoute = CoreWebhooksRouteImport.update({
+  id: '/webhooks',
+  path: '/webhooks',
+  getParentRoute: () => CoreRoute,
+} as any)
+const CoreTagsRoute = CoreTagsRouteImport.update({
+  id: '/tags',
+  path: '/tags',
+  getParentRoute: () => CoreRoute,
+} as any)
+const CoreSettingsRoute = CoreSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => CoreRoute,
+} as any)
+const CorePostsRoute = CorePostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => CoreRoute,
+} as any)
+const CoreKeysRoute = CoreKeysRouteImport.update({
+  id: '/keys',
+  path: '/keys',
+  getParentRoute: () => CoreRoute,
+} as any)
+const CoreHelpRoute = CoreHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => CoreRoute,
+} as any)
+const CoreDashRoute = CoreDashRouteImport.update({
+  id: '/dash',
+  path: '/dash',
+  getParentRoute: () => CoreRoute,
+} as any)
+const CoreCategoriesRoute = CoreCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => CoreRoute,
+} as any)
+const CoreAuthorsRoute = CoreAuthorsRouteImport.update({
+  id: '/authors',
+  path: '/authors',
+  getParentRoute: () => CoreRoute,
+} as any)
+const CoreAssetsRoute = CoreAssetsRouteImport.update({
+  id: '/assets',
+  path: '/assets',
+  getParentRoute: () => CoreRoute,
+} as any)
+const CoreAccountRoute = CoreAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
   getParentRoute: () => CoreRoute,
 } as any)
 const AuthSignUpRoute = AuthSignUpRouteImport.update({
@@ -59,14 +119,34 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
-  '/dashboard': typeof CoreDashboardRoute
+  '/account': typeof CoreAccountRoute
+  '/assets': typeof CoreAssetsRoute
+  '/authors': typeof CoreAuthorsRoute
+  '/categories': typeof CoreCategoriesRoute
+  '/dash': typeof CoreDashRoute
+  '/help': typeof CoreHelpRoute
+  '/keys': typeof CoreKeysRoute
+  '/posts': typeof CorePostsRoute
+  '/settings': typeof CoreSettingsRoute
+  '/tags': typeof CoreTagsRoute
+  '/webhooks': typeof CoreWebhooksRoute
   '/': typeof MarketingIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
-  '/dashboard': typeof CoreDashboardRoute
+  '/account': typeof CoreAccountRoute
+  '/assets': typeof CoreAssetsRoute
+  '/authors': typeof CoreAuthorsRoute
+  '/categories': typeof CoreCategoriesRoute
+  '/dash': typeof CoreDashRoute
+  '/help': typeof CoreHelpRoute
+  '/keys': typeof CoreKeysRoute
+  '/posts': typeof CorePostsRoute
+  '/settings': typeof CoreSettingsRoute
+  '/tags': typeof CoreTagsRoute
+  '/webhooks': typeof CoreWebhooksRoute
   '/': typeof MarketingIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -77,15 +157,55 @@ export interface FileRoutesById {
   '/_marketing': typeof MarketingRouteWithChildren
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_auth/sign-up': typeof AuthSignUpRoute
-  '/_core/dashboard': typeof CoreDashboardRoute
+  '/_core/account': typeof CoreAccountRoute
+  '/_core/assets': typeof CoreAssetsRoute
+  '/_core/authors': typeof CoreAuthorsRoute
+  '/_core/categories': typeof CoreCategoriesRoute
+  '/_core/dash': typeof CoreDashRoute
+  '/_core/help': typeof CoreHelpRoute
+  '/_core/keys': typeof CoreKeysRoute
+  '/_core/posts': typeof CorePostsRoute
+  '/_core/settings': typeof CoreSettingsRoute
+  '/_core/tags': typeof CoreTagsRoute
+  '/_core/webhooks': typeof CoreWebhooksRoute
   '/_marketing/': typeof MarketingIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/sign-in' | '/sign-up' | '/dashboard' | '/' | '/api/auth/$'
+  fullPaths:
+    | '/sign-in'
+    | '/sign-up'
+    | '/account'
+    | '/assets'
+    | '/authors'
+    | '/categories'
+    | '/dash'
+    | '/help'
+    | '/keys'
+    | '/posts'
+    | '/settings'
+    | '/tags'
+    | '/webhooks'
+    | '/'
+    | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/sign-in' | '/sign-up' | '/dashboard' | '/' | '/api/auth/$'
+  to:
+    | '/sign-in'
+    | '/sign-up'
+    | '/account'
+    | '/assets'
+    | '/authors'
+    | '/categories'
+    | '/dash'
+    | '/help'
+    | '/keys'
+    | '/posts'
+    | '/settings'
+    | '/tags'
+    | '/webhooks'
+    | '/'
+    | '/api/auth/$'
   id:
     | '__root__'
     | '/_auth'
@@ -93,7 +213,17 @@ export interface FileRouteTypes {
     | '/_marketing'
     | '/_auth/sign-in'
     | '/_auth/sign-up'
-    | '/_core/dashboard'
+    | '/_core/account'
+    | '/_core/assets'
+    | '/_core/authors'
+    | '/_core/categories'
+    | '/_core/dash'
+    | '/_core/help'
+    | '/_core/keys'
+    | '/_core/posts'
+    | '/_core/settings'
+    | '/_core/tags'
+    | '/_core/webhooks'
     | '/_marketing/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
@@ -135,11 +265,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketingIndexRouteImport
       parentRoute: typeof MarketingRoute
     }
-    '/_core/dashboard': {
-      id: '/_core/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof CoreDashboardRouteImport
+    '/_core/webhooks': {
+      id: '/_core/webhooks'
+      path: '/webhooks'
+      fullPath: '/webhooks'
+      preLoaderRoute: typeof CoreWebhooksRouteImport
+      parentRoute: typeof CoreRoute
+    }
+    '/_core/tags': {
+      id: '/_core/tags'
+      path: '/tags'
+      fullPath: '/tags'
+      preLoaderRoute: typeof CoreTagsRouteImport
+      parentRoute: typeof CoreRoute
+    }
+    '/_core/settings': {
+      id: '/_core/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof CoreSettingsRouteImport
+      parentRoute: typeof CoreRoute
+    }
+    '/_core/posts': {
+      id: '/_core/posts'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof CorePostsRouteImport
+      parentRoute: typeof CoreRoute
+    }
+    '/_core/keys': {
+      id: '/_core/keys'
+      path: '/keys'
+      fullPath: '/keys'
+      preLoaderRoute: typeof CoreKeysRouteImport
+      parentRoute: typeof CoreRoute
+    }
+    '/_core/help': {
+      id: '/_core/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof CoreHelpRouteImport
+      parentRoute: typeof CoreRoute
+    }
+    '/_core/dash': {
+      id: '/_core/dash'
+      path: '/dash'
+      fullPath: '/dash'
+      preLoaderRoute: typeof CoreDashRouteImport
+      parentRoute: typeof CoreRoute
+    }
+    '/_core/categories': {
+      id: '/_core/categories'
+      path: '/categories'
+      fullPath: '/categories'
+      preLoaderRoute: typeof CoreCategoriesRouteImport
+      parentRoute: typeof CoreRoute
+    }
+    '/_core/authors': {
+      id: '/_core/authors'
+      path: '/authors'
+      fullPath: '/authors'
+      preLoaderRoute: typeof CoreAuthorsRouteImport
+      parentRoute: typeof CoreRoute
+    }
+    '/_core/assets': {
+      id: '/_core/assets'
+      path: '/assets'
+      fullPath: '/assets'
+      preLoaderRoute: typeof CoreAssetsRouteImport
+      parentRoute: typeof CoreRoute
+    }
+    '/_core/account': {
+      id: '/_core/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof CoreAccountRouteImport
       parentRoute: typeof CoreRoute
     }
     '/_auth/sign-up': {
@@ -179,11 +379,31 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface CoreRouteChildren {
-  CoreDashboardRoute: typeof CoreDashboardRoute
+  CoreAccountRoute: typeof CoreAccountRoute
+  CoreAssetsRoute: typeof CoreAssetsRoute
+  CoreAuthorsRoute: typeof CoreAuthorsRoute
+  CoreCategoriesRoute: typeof CoreCategoriesRoute
+  CoreDashRoute: typeof CoreDashRoute
+  CoreHelpRoute: typeof CoreHelpRoute
+  CoreKeysRoute: typeof CoreKeysRoute
+  CorePostsRoute: typeof CorePostsRoute
+  CoreSettingsRoute: typeof CoreSettingsRoute
+  CoreTagsRoute: typeof CoreTagsRoute
+  CoreWebhooksRoute: typeof CoreWebhooksRoute
 }
 
 const CoreRouteChildren: CoreRouteChildren = {
-  CoreDashboardRoute: CoreDashboardRoute,
+  CoreAccountRoute: CoreAccountRoute,
+  CoreAssetsRoute: CoreAssetsRoute,
+  CoreAuthorsRoute: CoreAuthorsRoute,
+  CoreCategoriesRoute: CoreCategoriesRoute,
+  CoreDashRoute: CoreDashRoute,
+  CoreHelpRoute: CoreHelpRoute,
+  CoreKeysRoute: CoreKeysRoute,
+  CorePostsRoute: CorePostsRoute,
+  CoreSettingsRoute: CoreSettingsRoute,
+  CoreTagsRoute: CoreTagsRoute,
+  CoreWebhooksRoute: CoreWebhooksRoute,
 }
 
 const CoreRouteWithChildren = CoreRoute._addFileChildren(CoreRouteChildren)
