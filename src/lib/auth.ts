@@ -1,7 +1,6 @@
 import { env } from "cloudflare:workers";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { reactStartCookies } from "better-auth/react-start";
 import { getDB } from "@/db/drizzle";
 import * as schema from "@/db/schema";
 
@@ -10,7 +9,6 @@ export const authConfig = {
 		enabled: true,
 		requireEmailVerification: false,
 	},
-	plugins: [reactStartCookies()],
 	socialProviders: {
 		google: {
 			clientId: process.env.GOOGLE_CLIENT_ID as string,

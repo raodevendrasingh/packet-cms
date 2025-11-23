@@ -7,7 +7,7 @@ export type T = z.infer<typeof themeValidator>;
 const storageKey = "_preferred-parcel-theme";
 
 export const getThemeServerFn = createServerFn().handler(
-	async () => (getCookie(storageKey) || "light") as T
+	async () => (getCookie(storageKey) || "dark") as T
 );
 
 export const setThemeServerFn = createServerFn({ method: "POST" })

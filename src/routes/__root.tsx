@@ -1,6 +1,8 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { ErrorComponent } from "@/components/error";
+import { NotFound } from "@/components/not-found";
 import { Toaster } from "@/components/ui/sonner";
 import { getThemeServerFn } from "@/lib/theme";
 import { ThemeProvider } from "@/providers/theme-provider";
@@ -42,6 +44,8 @@ export const Route = createRootRoute({
 	}),
 	loader: () => getThemeServerFn(),
 	shellComponent: RootDocument,
+	errorComponent: ({ error, reset }) => <ErrorComponent error={error} reset={reset} />,
+	notFoundComponent: NotFound,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
