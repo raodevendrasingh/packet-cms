@@ -1,6 +1,10 @@
 import { Slot } from "@radix-ui/react-slot";
+import {
+	type Icon,
+	IconLayoutSidebarLeftCollapseFilled,
+	IconLayoutSidebarLeftExpandFilled,
+} from "@tabler/icons-react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { PanelLeftIcon } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,7 +24,7 @@ import { cn } from "@/lib/utils";
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = "16rem";
-const SIDEBAR_WIDTH_MOBILE = "18rem";
+const SIDEBAR_WIDTH_MOBILE = "16rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
@@ -243,12 +247,25 @@ function Sidebar({
 	);
 }
 
-function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<typeof Button>) {
-	const { toggleSidebar } = useSidebar();
+function SidebarTrigger({
+	className,
+	onClick,
+	icon,
+	...props
+}: React.ComponentProps<typeof Button> & {
+	icon?: Icon;
+}) {
+	const { toggleSidebar, state } = useSidebar();
+
+	const defaultIcon =
+		state === "collapsed"
+			? IconLayoutSidebarLeftExpandFilled
+			: IconLayoutSidebarLeftCollapseFilled;
+	const IconComponent = icon ?? defaultIcon;
 
 	return (
 		<Button
-			className={cn("size-7", className)}
+			className={cn("rounded-lg [&>svg]:mx-auto!", className)}
 			data-sidebar="trigger"
 			data-slot="sidebar-trigger"
 			onClick={(event) => {
@@ -259,8 +276,8 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
 			variant="ghost"
 			{...props}
 		>
-			<PanelLeftIcon />
 			<span className="sr-only">Toggle Sidebar</span>
+			<IconComponent className="size-6 shrink-0" strokeWidth={2} />
 		</Button>
 	);
 }
@@ -295,7 +312,7 @@ function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
 		<main
 			className={cn(
 				"relative flex w-full flex-1 flex-col bg-background",
-				"md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2 md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm",
+				"md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-0.5 md:peer-data-[variant=inset]:m-1 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-lg md:peer-data-[variant=inset]:shadow-sm",
 				className
 			)}
 			data-slot="sidebar-inset"

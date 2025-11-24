@@ -63,12 +63,12 @@ export const sidebarData = {
 	],
 	navDevelopers: [
 		{
-			name: "API Keys",
+			title: "API Keys",
 			url: "/keys",
 			icon: IconKey,
 		},
 		{
-			name: "Webhooks",
+			title: "Webhooks",
 			url: "/webhooks",
 			icon: IconWebhook,
 		},
